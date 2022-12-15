@@ -1,5 +1,5 @@
 const TableProducts = ({data, filter}) => {
-    if (!filter[0]) {
+    if (!filter) {
         return (
             <tbody className='text-center'>
             {

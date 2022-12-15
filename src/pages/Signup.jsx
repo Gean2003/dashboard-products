@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 import { useSignUp } from "../hooks/useSignUp";
 
@@ -33,7 +33,7 @@ const Signup = () => {
     } ;
 
     return ( 
-        <form onSubmit={handleSubmit} className='w-[420px] border-black-500 bg-white rounded-xl border-2  py-4 px-4 flex flex-col gap-3 h-auto justify-center'> 
+        <form onSubmit={handleSubmit} className='w-[420px] max-w-[1366px] border-black-500 bg-white rounded-xl border-2  py-4 px-4 flex flex-col gap-3 h-auto justify-center'> 
             <h3 className='text-center text-2xl font-semibold my-3 text-blue-500'>Sign up</h3>
             <label className='text-gray-500'>Email:</label>
             <input className='py-3 px-2 mb-3 rounded-xl bg-[#F5F3F5] outline-none' placeholder='example@mail.com' required type="email" onChange={ (e) => setEmail(e.target.value) }  value={email} />
@@ -48,6 +48,7 @@ const Signup = () => {
               <Link to='/login' className='text-blue-700'>you have acount? Login </Link>  
             </div>
             <button className='my-3 w-full py-3 px-3 bg-blue-600 text-white text-lg mx-auto rounded-xl transition-all hover:scale-105' > Sign up</button>
+            { localStorage.getItem('token')? <Navigate to='/dashboard'/> : ""}
         </form>
     )
     

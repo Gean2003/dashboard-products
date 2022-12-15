@@ -2,37 +2,54 @@ import TableProducts from "../components/TableProducts";
 import { useFetch } from "../hooks/useFetch";
 import ReactPaginate from 'react-paginate'
 import { useState } from "react";
-import axios from "axios";
 
 const Dashboard = () => {
 
     const { getUser,userData } = useFetch();
     const [input, setInput] = useState('');
+    const [option, setOption] = useState('all');
     const [itemOffset, setItemOffset] = useState(0);
     const itemsPerPage = 15 ;
 
     getUser('https://randomuser.me/api/?results=150')
+        
+/**
+ * PERF: pagination
+ *
+ */
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = userData?.results.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(userData?.results.length / itemsPerPage);
 
-    let filterUser = []
-
-    if (!input) {}
-    else { filterUser = userData?.results.filter( u => u.name.first.toLowerCase().includes(input.toLowerCase().trim() )) }
-  
-   const endOffset = itemOffset + itemsPerPage;
-   const currentItems = userData?.results.slice(itemOffset, endOffset);
-   const pageCount = Math.ceil(userData?.results.length / itemsPerPage);
-
-   const handlePageClick = (event) => {
-   const newOffset = (event.selected * itemsPerPage) % userData?.results.length;
+    const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % userData?.results.length;
     setItemOffset(newOffset);
     }
+
+/**
+ * PERF: Filter ----> filter by gender
+*        Filter -----> ilter by input
+ *
+ */
+    let filterUser 
+
+    if (!input) { }
+     else { filterUser = userData?.results.filter( u => u.name.first.toLowerCase().includes(input.toLowerCase().trim() )) }
+    if(option !='all'){ filterUser = userData?.results.filter( u=> u.gender === option) }
+    if(option !='all' && input){ setOption('all') }
+        else{}
 
     
 
     return (
-        <div className="h-auto py-7 ">
-            <div className='text-center py-4 px-3 my-5'>
+        <div className="h-auto py-7 max-w-[1920px] mx-auto ">
+            <div className='text-center py-4 px-3 my-5 gap-5 flex items-center justify-center'>
                 <input type='text' value={input} onChange={(e) => setInput(e.target.value)} placeholder='Search users' className='w-[500px] py-3 px-2 rounded-xl shadow-xl outline-none' />
+                <select onChange={(e) => setOption(e.target.value)} className='py-3 px-3 bg-white rounded-xl shadow-xl text-center' >
+                    <option>all</option>
+                    <option>female</option>
+                    <option>male</option>
+                </select>
             </div>
             <table className='w-6/12 mx-auto py-5 px-2 mb-20  border-2 overflow-hidden border-white shadow-2xl rounded-xl'>
                 <thead>
@@ -47,7 +64,7 @@ const Dashboard = () => {
                      <TableProducts data={currentItems} filter={filterUser} /> 
             </table>
             {
-            !input? <ReactPaginate
+            !input &&  option=='all'?  <ReactPaginate
                 breakLabel="..."
                 nextLabel="next >"
                 onPageChange={handlePageClick}

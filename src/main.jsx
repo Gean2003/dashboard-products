@@ -6,11 +6,9 @@ import { AuthContextProvider } from './context/AuthContext'
 import './main.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <AuthContextProvider >
       <HashRouter>
             <App />
       </HashRouter>
     </AuthContextProvider>
-  </React.StrictMode>,
 )
