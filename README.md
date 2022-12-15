@@ -12,7 +12,7 @@ Y un un apartado de registro:
 
 ## Tiempo estimado
 
-Realizar el challenge me tomo 3 dias, realice la mayoria de los requerimientos que se pedian.
+Realizar el challenge me tomo 3 dias, realicé la mayoria de los requerimientos que se solicitaban.
 
 ## Funcionalidades añadibled
 
