@@ -9,7 +9,7 @@ import Dashboard from "./protected/Dashboard"
 function App() {
 
   return (
-    <div className="App bg-[#F5F3F5]">
+    <div className="App bg-[#F5F3F5] font-sans">
       <Routes>
         <Route path='/' element={ <Home /> } />
 
